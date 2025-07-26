@@ -1,0 +1,51 @@
+using System;
+using System.Globalization;
+
+class Program
+{
+    static void Main()
+    {
+        string[] names = new string[5];
+        DateTime[] dates = new DateTime[5];
+        int i = 0;
+
+        while (i < 5)
+        {
+            Console.Write("Event name: ");
+            string name = Console.ReadLine();
+
+            Console.Write("Event date (MM/DD/YYYY): ");
+            string input = Console.ReadLine();
+
+            if (DateTime.TryParseExact(input, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date))
+            {
+                bool exists = false;
+                for (int j = 0; j < i; j++)
+                    if (dates[j] == date) exists = true;
+
+                if (exists)
+                    Console.WriteLine("Date already used.\n");
+                else
+                {
+                    names[i] = name;
+                    dates[i] = date;
+                    i++;
+                }
+            }
+            else Console.WriteLine("Invalid date.\n");
+        }
+
+        // Sort
+        for (int a = 0; a < 4; a++)
+            for (int b = a + 1; b < 5; b++)
+                if (dates[a] > dates[b])
+                {
+                    var tempDate = dates[a]; dates[a] = dates[b]; dates[b] = tempDate;
+                    var tempName = names[a]; names[a] = names[b]; names[b] = tempName;
+                }
+
+        Console.WriteLine("\nSorted Events:");
+        for (int j = 0; j < 5; j++)
+            Console.WriteLine($"{names[j]} - {dates[j]:MM/dd/yyyy}");
+    }
+}
