@@ -1,0 +1,41 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        const int SIZE = 10;
+        int[] original = new int[SIZE];
+        int[] rotated = new int[SIZE];
+
+        // Input array elements
+        Console.WriteLine("Enter 10 integers:");
+        for (int i = 0; i < SIZE; i++)
+        {
+            Console.Write($"Element {i + 1}: ");
+            while (!int.TryParse(Console.ReadLine(), out original[i]))
+                Console.Write("Invalid. Enter an integer: ");
+        }
+
+        // Input k
+        Console.Write("\nEnter value of k (right shift): ");
+        int k;
+        while (!int.TryParse(Console.ReadLine(), out k))
+            Console.Write("Invalid. Enter an integer: ");
+
+        // Normalize k
+        k = k % SIZE;
+        if (k < 0) k += SIZE; // Handle negative k (optional)
+
+        // Perform rotation
+        for (int i = 0; i < SIZE; i++)
+        {
+            int newIndex = (i + k) % SIZE;
+            rotated[newIndex] = original[i];
+        }
+
+        // Output
+        Console.WriteLine("\nOriginal Array: " + string.Join(", ", original));
+        Console.WriteLine("Rotated  Array: " + string.Join(", ", rotated));
+    }
+}
