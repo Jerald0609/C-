@@ -1,0 +1,24 @@
+using System;
+using System.Data;
+
+class Program
+{
+    static void Main()
+    {
+        int[] nums = new int[10];
+        Console.WriteLine("Enter 10 integers:");
+        for (int i = 0; i < 10; i++)
+            nums[i] = int.Parse(Console.ReadLine());
+
+        Console.Write("Enter formula using 'x' (e.g., (2*x+3)%5): ");
+        string formula = Console.ReadLine();
+
+        Console.WriteLine("\nOriginal\tEvaluated");
+        foreach (int x in nums)
+        {
+            var expr = formula.Replace("x", x.ToString());
+            var result = new DataTable().Compute(expr, "");
+            Console.WriteLine($"{x}\t\t{result}");
+        }
+    }
+}
