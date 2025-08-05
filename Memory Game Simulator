@@ -1,0 +1,71 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static char[] board = new char[16];
+    static bool[] revealed = new bool[16];
+
+    static void Main()
+    {
+        var letters = new List<char>();
+        for (char c = 'A'; c <= 'H'; c++) letters.AddRange(new[] { c, c });
+        var rand = new Random();
+        for (int i = 0; i < 16; i++)
+        {
+            int index = rand.Next(letters.Count);
+            board[i] = letters[index];
+            letters.RemoveAt(index);
+        }
+
+        int matched = 0;
+        while (matched < 8)
+        {
+            ShowBoard();
+            int p1 = GetPos("First"), p2 = GetPos("Second", p1);
+
+            revealed[p1] = revealed[p2] = true;
+            ShowBoard();
+
+            if (board[p1] == board[p2])
+            {
+                Console.WriteLine("✅ Match!");
+                matched++;
+            }
+            else
+            {
+                Console.WriteLine("❌ No match.");
+                revealed[p1] = revealed[p2] = false;
+            }
+
+            Console.WriteLine("Press Enter...");
+            Console.ReadLine();
+            Console.Clear();
+        }
+
+        ShowBoard();
+        Console.WriteLine("🎉 All pairs matched!");
+    }
+
+    static void ShowBoard()
+    {
+        for (int i = 0; i < 16; i++)
+        {
+            if (i % 4 == 0) Console.WriteLine();
+            Console.Write(revealed[i] ? $" {board[i]}  " : $"[{i + 1,2}] ");
+        }
+        Console.WriteLine();
+    }
+
+    static int GetPos(string label, int other = -1)
+    {
+        int pos;
+        while (true)
+        {
+            Console.Write($"{label} Position (1-16): ");
+            if (int.TryParse(Console.ReadLine(), out pos) && pos >= 1 && pos <= 16 && !revealed[pos - 1] && pos - 1 != other)
+                return pos - 1;
+            Console.WriteLine("⚠️ Invalid or already picked.");
+        }
+    }
+}
