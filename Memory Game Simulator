@@ -29,12 +29,12 @@ class Program
 
             if (board[p1] == board[p2])
             {
-                Console.WriteLine("✅ Match!");
+                Console.WriteLine("Match!");
                 matched++;
             }
             else
             {
-                Console.WriteLine("❌ No match.");
+                Console.WriteLine("No match.");
                 revealed[p1] = revealed[p2] = false;
             }
 
@@ -44,7 +44,7 @@ class Program
         }
 
         ShowBoard();
-        Console.WriteLine("🎉 All pairs matched!");
+        Console.WriteLine("All pairs matched!");
     }
 
     static void ShowBoard()
@@ -65,7 +65,7 @@ class Program
             Console.Write($"{label} Position (1-16): ");
             if (int.TryParse(Console.ReadLine(), out pos) && pos >= 1 && pos <= 16 && !revealed[pos - 1] && pos - 1 != other)
                 return pos - 1;
-            Console.WriteLine("⚠️ Invalid or already picked.");
+            Console.WriteLine(" Invalid or already picked.");
         }
     }
 }
