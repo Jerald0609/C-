@@ -1,0 +1,50 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        const int MIN_TRANSACTIONS = 20;
+        List<decimal> transactions = new List<decimal>();
+
+        Console.WriteLine($"Enter {MIN_TRANSACTIONS} transaction amounts:");
+
+        // Input loop
+        for (int i = 0; i < MIN_TRANSACTIONS; i++)
+        {
+            decimal amount;
+            while (true)
+            {
+                Console.Write($"Transaction #{i + 1}: ");
+                if (decimal.TryParse(Console.ReadLine(), out amount) && amount >= 0)
+                {
+                    transactions.Add(amount);
+                    break;
+                }
+                Console.WriteLine("Invalid input. Please enter a positive decimal value.");
+            }
+        }
+
+        // Filter transactions > 10000
+        var largeTransactions = transactions.Where(t => t > 10000).ToList();
+        decimal total = largeTransactions.Sum();
+
+        // Output results
+        Console.WriteLine("\n Transactions Above 10,000.00:");
+        if (largeTransactions.Count == 0)
+        {
+            Console.WriteLine("None");
+        }
+        else
+        {
+            foreach (var t in largeTransactions)
+            {
+                Console.WriteLine($"₱{t:F2}");
+            }
+        }
+
+        Console.WriteLine($"\n Total of qualifying transactions: ₱{total:F2}");
+    }
+}
