@@ -1,0 +1,33 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        const int TOTAL = 15;
+        List<string> inputNames = new List<string>();
+
+        Console.WriteLine($"Enter {TOTAL} contact names (duplicates allowed):");
+        for (int i = 0; i < TOTAL; i++)
+        {
+            Console.Write($"Name #{i + 1}: ");
+            string name = Console.ReadLine().Trim();
+            inputNames.Add(name);
+        }
+
+        // Remove duplicates (case-insensitive) and sort
+        var distinctSorted = inputNames
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(name => name, StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+        // Output
+        Console.WriteLine("\n📇 Distinct, Sorted Contact Names:");
+        foreach (var name in distinctSorted)
+        {
+            Console.WriteLine(name);
+        }
+    }
+}
