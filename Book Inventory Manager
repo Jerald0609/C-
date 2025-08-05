@@ -1,0 +1,38 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        var books = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        string title;
+        Console.WriteLine("Enter book title and quantity (type 'done' to finish):");
+
+        while (true)
+        {
+            Console.Write("Title: ");
+            title = Console.ReadLine();
+            if (title.ToLower() == "done") break;
+
+            Console.Write("Qty: ");
+            if (int.TryParse(Console.ReadLine(), out int qty))
+                books[title] = qty;
+        }
+
+        Console.Write("\nSearch book to update: ");
+        title = Console.ReadLine();
+
+        if (books.ContainsKey(title))
+        {
+            Console.Write("New Qty: ");
+            if (int.TryParse(Console.ReadLine(), out int newQty))
+                books[title] = newQty;
+        }
+        else Console.WriteLine("Not found.");
+
+        Console.WriteLine("\nInventory:");
+        foreach (var b in books)
+            Console.WriteLine($"{b.Key}: {b.Value}");
+    }
+}
