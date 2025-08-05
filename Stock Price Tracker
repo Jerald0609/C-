@@ -1,0 +1,45 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        const int DAYS = 7;
+        decimal[] prices = new decimal[DAYS];
+        decimal[] gains = new decimal[DAYS];
+        int maxGainDay = -1;
+        decimal maxGain = decimal.MinValue;
+
+        // Input stock prices
+        for (int i = 0; i < DAYS; i++)
+        {
+            while (true)
+            {
+                Console.Write($"Enter stock price for Day {i + 1}: ");
+                if (decimal.TryParse(Console.ReadLine(), out prices[i]) && prices[i] > 0)
+                    break;
+                Console.WriteLine("Invalid price. Please enter a positive number.");
+            }
+        }
+
+        // Calculate daily gains (from Day 2 to Day 7)
+        Console.WriteLine("\nDaily Percentage Gains:");
+        for (int i = 1; i < DAYS; i++)
+        {
+            gains[i] = ((prices[i] - prices[i - 1]) / prices[i - 1]) * 100;
+            Console.WriteLine($"Day {i + 1}: {gains[i]:F2}%");
+
+            if (gains[i] > maxGain)
+            {
+                maxGain = gains[i];
+                maxGainDay = i + 1; // +1 for 1-based day label
+            }
+        }
+
+        // Output result
+        if (maxGainDay != -1)
+            Console.WriteLine($"\n📈 Highest gain was on Day {maxGainDay} with a {maxGain:F2}% increase.");
+        else
+            Console.WriteLine("\nNo gain recorded over the days.");
+    }
+}
