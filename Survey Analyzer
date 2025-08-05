@@ -1,0 +1,36 @@
+using System;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        int[] ages = new int[20];
+        int u18 = 0, a18_35 = 0, a36_60 = 0, o60 = 0;
+
+        for (int i = 0; i < 20; i++)
+        {
+            int age;
+            do
+            {
+                Console.Write($"Age #{i + 1}: ");
+            } while (!int.TryParse(Console.ReadLine(), out age) || age < 0 || age > 120);
+
+            ages[i] = age;
+            if (age < 18) u18++;
+            else if (age <= 35) a18_35++;
+            else if (age <= 60) a36_60++;
+            else o60++;
+        }
+
+        Console.WriteLine($"\nAverage: {ages.Average():F2} | Min: {ages.Min()} | Max: {ages.Max()}");
+        Console.WriteLine("\n+-+-+");
+        Console.WriteLine("| Age Bracket          | Count  |");
+        Console.WriteLine("+-+-+");
+        Console.WriteLine($"| Below 18             | {u18,6} |");
+        Console.WriteLine($"| 18 - 35              | {a18_35,6} |");
+        Console.WriteLine($"| 36 - 60              | {a36_60,6} |");
+        Console.WriteLine($"| Above 60             | {o60,6} |");
+        Console.WriteLine("+-+-+");
+    }
+}
