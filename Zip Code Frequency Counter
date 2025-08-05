@@ -1,0 +1,23 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        List<string> zips = new List<string>();
+        Console.WriteLine("Enter 25 zip codes:");
+        for (int i = 0; i < 25; i++)
+            zips.Add(Console.ReadLine());
+
+        var freq = zips
+            .GroupBy(z => z)
+            .Select(g => new { Zip = g.Key, Count = g.Count() })
+            .OrderByDescending(g => g.Count);
+
+        Console.WriteLine("\nZip Code\tCount");
+        foreach (var entry in freq)
+            Console.WriteLine($"{entry.Zip}\t\t{entry.Count}");
+    }
+}
