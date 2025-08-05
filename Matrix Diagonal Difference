@@ -1,0 +1,45 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int N;
+
+        // Input matrix size
+        do
+        {
+            Console.Write("Enter matrix size N (N >= 3): ");
+        } while (!int.TryParse(Console.ReadLine(), out N) || N < 3);
+
+        int[,] matrix = new int[N, N];
+
+        Console.WriteLine($"\nEnter {N * N} integers for the {N}x{N} matrix:");
+
+        // Input matrix elements
+        for (int i = 0; i < N; i++)
+        {
+            for (int j = 0; j < N; j++)
+            {
+                Console.Write($"Element [{i},{j}]: ");
+                while (!int.TryParse(Console.ReadLine(), out matrix[i, j]))
+                    Console.Write("Invalid. Re-enter: ");
+            }
+        }
+
+        int sumPrimary = 0;
+        int sumSecondary = 0;
+
+        for (int i = 0; i < N; i++)
+        {
+            sumPrimary += matrix[i, i];             // Primary diagonal
+            sumSecondary += matrix[i, N - 1 - i];   // Secondary diagonal
+        }
+
+        int difference = Math.Abs(sumPrimary - sumSecondary);
+
+        Console.WriteLine($"\nPrimary Diagonal Sum   = {sumPrimary}");
+        Console.WriteLine($"Secondary Diagonal Sum = {sumSecondary}");
+        Console.WriteLine($"Absolute Difference    = {difference}");
+    }
+}
