@@ -24,7 +24,7 @@ class Program
             .ToList();
 
         // Output
-        Console.WriteLine("\n📇 Distinct, Sorted Contact Names:");
+        Console.WriteLine("\n Distinct, Sorted Contact Names:");
         foreach (var name in distinctSorted)
         {
             Console.WriteLine(name);
